@@ -48,4 +48,13 @@ public class Task {
     public Instant getCreatedAt() {
         return createdAt;
     }
+
+    public void toPrint() {
+        System.out.println(getId() + " " +
+                getTitle() + " " +
+                getStatus() + " " +
+                getDescription() + " " +
+                getCreatedAt() + " ");
+
+    }
 }
