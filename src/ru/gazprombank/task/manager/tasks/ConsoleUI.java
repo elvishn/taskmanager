@@ -1,5 +1,6 @@
 package ru.gazprombank.task.manager.tasks;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class ConsoleUI {
@@ -16,7 +17,9 @@ public class ConsoleUI {
         printHelp();
 
         while (running) {
-            String command = sc.next();
+            String command = sc.nextLine().trim();
+            if (command.isEmpty()) {
+                continue;}
             if (command.equalsIgnoreCase("help")) {
                 printHelp();
                 continue;
@@ -27,10 +30,21 @@ public class ConsoleUI {
                 continue;
             }
 
+            else if (command.equalsIgnoreCase("add")) {
+                System.out.println("Write your task:");
+                add();
+                continue;
+            }
+
+            else if (command.equalsIgnoreCase("delete")) {
+                System.out.println("Write task id:");
+                delete();
+                continue;
+            }
+
             else if (command.equalsIgnoreCase("exit")) {
                 System.out.println("You are closed program. Goodbye!");
                 running = false;
-                ;
             }
             else {System.out.println("Choose correct command!");
             continue;}
@@ -41,5 +55,28 @@ public class ConsoleUI {
         System.out.println("/help: command description");
         System.out.println("/TaskList: List with all the tasks");
         System.out.println("/Exit: Close program");
+        System.out.println("/Add: Add a new task. Write your task in format TASK, DESCRIPTION");
+        System.out.println("/Delete: Delete task by id. Write task id");
+
+    }
+
+    public void add() {
+        String s = sc.nextLine();
+        String[] lst = s.split(",");
+        if (lst.length == 2) {
+            manager.addTask(lst[0], lst[1]);
+            System.out.println("ADD NEW TASK: " + lst[0]);
+        }
+        else {System.out.println("Write correct task!");}
+    }
+
+    public void delete() {
+        int id = sc.nextInt();
+        Map<Integer, Task> taski = manager.getAllTask();
+        if (taski.get(id) != null) {
+            manager.getAllTask().remove(id);
+            System.out.println("Task " + id + " was delete!");
+        }
+        else {System.out.println("Task is not found!");}
     }
 }
