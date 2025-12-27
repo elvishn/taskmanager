@@ -1,3 +1,4 @@
+import ru.gazprombank.task.manager.tasks.ConsoleUI;
 import ru.gazprombank.task.manager.tasks.Task;
 import ru.gazprombank.task.manager.tasks.TaskManager;
 
@@ -14,6 +15,7 @@ void main() {
 
     manager.findTaskById(2).toPrint();
     manager.deleteTask(2);
-    Map<Integer, Task> tasks2 = manager.getAllTask();
+    ConsoleUI console = new ConsoleUI(manager);
+    console.start();
 
 }
