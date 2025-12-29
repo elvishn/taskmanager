@@ -46,6 +46,12 @@ public class ConsoleUI {
                 System.out.println("You are closed program. Goodbye!");
                 running = false;
             }
+
+            else if (command.equalsIgnoreCase("status")) {
+                System.out.println("Write id and status (in a new line)");
+                status();
+                continue;
+            }
             else {System.out.println("Choose correct command!");
             continue;}
         }
@@ -57,6 +63,8 @@ public class ConsoleUI {
         System.out.println("/Exit: Close program");
         System.out.println("/Add: Add a new task. Write your task in format TASK, DESCRIPTION");
         System.out.println("/Delete: Delete task by id. Write task id");
+        System.out.println("/Status: Change status TODO, IN_PROGRESS, DONE by id");
+
 
     }
 
@@ -78,5 +86,20 @@ public class ConsoleUI {
             System.out.println("Task " + id + " was delete!");
         }
         else {System.out.println("Task is not found!");}
+    }
+
+    public void status() {
+        int id = Integer.parseInt(sc.nextLine());
+        String stat = sc.nextLine().toUpperCase();
+        Task task = manager.getAllTask().get(id);
+        try {
+            TaskStatus status = TaskStatus.valueOf(stat);
+            if (task != null) {
+                task.setStatus(status);
+                System.out.println("Task " + id + " change status. New status is " + status);
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Status isn't found. Try again.");
+        }
     }
 }

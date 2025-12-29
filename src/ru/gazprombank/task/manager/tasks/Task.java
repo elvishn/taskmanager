@@ -5,7 +5,7 @@ import java.time.Instant;
 public class Task {
     private final String title;
     private final String description;
-    private final TaskStatus status;
+    private  TaskStatus status;
     private final Instant createdAt;
 
     protected Task(int id, String title, String description) {
@@ -25,6 +25,10 @@ public class Task {
 
     public TaskStatus getStatus() {
         return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 
     public Instant getCreatedAt() {
