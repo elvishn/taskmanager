@@ -52,6 +52,21 @@ public class ConsoleUI {
                 status();
                 continue;
             }
+
+            else if (command.equalsIgnoreCase("filter")) {
+                System.out.println("Write status for filter");
+                String filter = sc.nextLine();
+                filter(filter);
+                continue;
+            }
+
+            else if (command.equalsIgnoreCase("search")) {
+                System.out.println("Write word or phrase for search");
+                String word = sc.nextLine();
+                search(word);
+                continue;
+            }
+
             else {System.out.println("Choose correct command!");
             continue;}
         }
@@ -64,6 +79,8 @@ public class ConsoleUI {
         System.out.println("/Add: Add a new task. Write your task in format TASK, DESCRIPTION");
         System.out.println("/Delete: Delete task by id. Write task id");
         System.out.println("/Status: Change status TODO, IN_PROGRESS, DONE by id");
+        System.out.println("/Filter: Choose status TODO, IN_PROGRESS, DONE for task list");
+        System.out.println("/Search: Search task by title or description");
 
 
     }
@@ -92,14 +109,16 @@ public class ConsoleUI {
         int id = Integer.parseInt(sc.nextLine());
         String stat = sc.nextLine().toUpperCase();
         Task task = manager.getAllTask().get(id);
-        try {
-            TaskStatus status = TaskStatus.valueOf(stat);
-            if (task != null) {
-                task.setStatus(status);
-                System.out.println("Task " + id + " change status. New status is " + status);
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Status isn't found. Try again.");
-        }
+        manager.updateTaskStatus(id, stat);
+    }
+
+    public void filter(String status) {
+        Map <Integer, Task> filterTask = manager.getTaskByStatus(status.trim());
+        manager.printTasks(filterTask);
+    }
+
+    public void search(String word) {
+        Map <Integer, Task> searchList = manager.searchTasks(word.trim());
+        manager.printTasks(searchList);
     }
 }

@@ -12,9 +12,11 @@ void main() {
     manager.addTask("Codding", "Write CRUD");
     manager.addTask("Sport", "Running");
     manager.printTasks();
-
-    manager.findTaskById(2).toPrint();
-    manager.deleteTask(2);
+    manager.updateTaskStatus(2, "in_ProgRess");
+    //manager.printTasks(manager.getTaskByStatus("TODO"));
+    //manager.printTasks(manager.searchTasks("english"));
+    //manager.findTaskById(2).toPrint();
+    //manager.deleteTask(2);
     ConsoleUI console = new ConsoleUI(manager);
     console.start();
 
